@@ -1,0 +1,106 @@
+class print :__edit__ {
+    $math:eq $print:__key__ 'obj';
+    if $math:result {
+        $io:write $print:obj :write '\n';
+    }
+}
+print $print;
+
+class bf
+	:idx -1
+	:char none
+	:ptr 0
+	:__edit__ {
+		$math:eq $bf:__key__ 'advance';
+		if $math:result {
+			$math:add $bf:idx 1;
+			$bf:idx $math:result;
+			$math:ge $bf:idx $bf:len;
+			if $math:result {
+				$bf:char none;
+			}
+			$math:lt $bf:idx $bf:len;
+			if $math:result {
+				$string:char $bf:code $bf:idx;
+				$bf:char $string:result;
+			}
+		}
+
+		$math:eq $bf:__key__ 'code';
+		if $math:result {
+			$utils:length $bf:code;
+			$bf:len $utils:result;
+			$table:create;
+			$bf:mem $table:result;
+			$table:set $bf:mem 0 0;
+		}
+
+		$math:eq $bf:__key__ 'start';
+		if $math:result {
+			$bf:advance;
+			loop -1 {
+				$math:eq $bf:char none;
+				if $math:result {
+					break;
+				}
+
+				$math:eq $bf:char '+';
+				if $math:result {
+					$table:get $bf:mem $bf:ptr;
+					$math:add $table:result 1;
+					$table:set $bf:mem $bf:ptr $math:result;
+				}
+
+				$math:eq $bf:char '-';
+				if $math:result {
+					$table:get $bf:mem $bf:ptr;
+					$math:sub $table:result 1;
+					$table:set $bf:mem $bf:ptr $math:result;
+				}
+
+				$math:eq $bf:char '>';
+				if $math:result {
+					$math:add $bf:ptr 1;
+					$table:get $bf:mem $bf:ptr;
+					$math:eq $table:result none;
+					if $math:result {
+						$table:set $bf:mem $bf:ptr 0;
+					}
+				}
+
+				$math:eq $bf:char '<';
+				if $math:result {
+					$math:sub $bf:ptr 1;
+					$table:get $bf:mem $bf:ptr;
+					$math:eq $table:result none;
+					if $math:result {
+						$table:set $bf:mem $bf:ptr 0;
+					}
+				}
+
+				$math:eq $bf:char '.';
+				if $math:result {
+					$table:get $bf:mem $bf:ptr;
+					$string:unicode $table:result;
+					$io:write $string:result;
+				}
+				$bf:advance;
+			}
+		}
+	}
+
+bf $bf :code '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.
++++++++++++++++++++++++++++++.
++++++++.
+.
++++.
+-------------------------------------------------------------------.
+------------.
++++++++++++++++++++++++++++++++++++++++++++++++++++++++.
+++++++++++++++++++++++++.
++++.
+------.
+--------.
+-------------------------------------------------------------------.
+-.';
+$bf:start;

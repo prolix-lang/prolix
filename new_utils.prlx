@@ -1,0 +1,17 @@
+class new_utils :__edit__ {
+  $math:eq $new_utils:__key__ "ipick";
+  if $math:result {
+    $utils:type $new_utils:ipick;
+    $math:ne $utils:result "table";
+    if $math:result {
+      $utils:error "arguments error (required table)";
+    }
+    $utils:length $new_utils:ipick;
+    $table:length $utils:result;
+    $math:sub $table:length 1;
+    $math:random 0 $math:result;
+    $table:get $new_utils:ipick $math:result;
+    $new_utils:result $table:result;
+  }
+}
+new_utils $new_utils;

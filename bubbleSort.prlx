@@ -1,0 +1,76 @@
+class sort :__edit__ {
+    $math:eq $sort:__key__ "sort";
+    if $math:eq {
+        $utils:type $sort:sort;
+        $math:ne $utils:result "table";
+        if $math:result {
+            $utils:error "bad argument (required table)";
+        }
+        $utils:length $sort:sort;
+        $table:n $utils:result;
+        $math:lt $table:n 0;
+        if $math:result {
+            exit;
+        }
+        loop -1 {
+            $table:swapped 0;
+            $math:sub $table:n 1;
+            $table:n $math:result;
+
+            $table:i 0;
+            loop $table:n {
+                $math:sub $table:n $table:i;
+                $math:sub $math:result 1;
+                
+                $table:j 0;
+                loop $math:result {
+                    $table:get $sort:sort $table:j;
+                    $table:j1 $table:result;
+
+                    $math:add $table:j 1;
+                    $table:j $math:result;
+
+                    $table:get $sort:sort $table:j;
+                    $table:j2 $table:result;
+
+                    $math:sub $table:j 1;
+                    $table:j $math:result;
+
+
+                    $math:gt $table:j1 $table:j2;
+                    if $math:result {
+                        $table:set $sort:sort $table:j $table:j2;
+
+                        $math:add $table:j 1;
+                        $table:j $math:result;
+
+                        $table:set $sort:sort $table:j $table:j1;
+
+                        $math:sub $table:j 1;
+                        $table:j $math:result;
+                    }
+
+                    $math:add $table:j 1;
+                    $table:j $math:result;
+                    $table:swapped 1;
+                }
+
+                $math:add $table:i 1;
+                $table:i $math:result
+            }
+
+            $math:eq $table:swapped 0;
+            if $math:result {
+                break;
+            }
+        }
+    }
+}
+sort $sort;
+$table:create;
+$table:push $table:result 4 :push $table:result 1 :push $table:result 5 :push $table:result 3 :push $table:result 2;
+$sort:sort $table:result;
+$table:foreach $sort:result {
+	$io:write $table:value :write ' ';
+};
+$io:write '\n';

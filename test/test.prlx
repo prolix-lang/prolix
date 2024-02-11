@@ -1,0 +1,3 @@
+$os:getcwd;
+$io:write $os:result;
+$io:write "\n";

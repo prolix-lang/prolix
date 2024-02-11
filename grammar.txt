@@ -1,0 +1,21 @@
+chunk ::= block
+
+block ::= {stat} {';'}
+
+stat ::= ';' |
+    obj {attr exp} |
+    Name obj {attr exp} |
+    class Name {attr exp} |
+    if exp group |
+    loop exp group |
+    require {Name | LiteralString} |
+    skip |
+    break
+
+obj ::= '$' Name
+
+attr ::= ':' Name
+
+group ::= '{' block '}'
+
+exp ::= none | Numeral | LiteralString | obj attr

@@ -1,0 +1,15 @@
+class config
+    :name "my-package"
+    :version "1.0.1";
+
+class information
+    :summary "Generic Testing Package"
+    :description "README.md"
+    :license "MIT"
+    :tags "cool" "hi"
+    :dependencies "prolix == 2.1"
+    :homepage "https://github.com/me/my-package";
+
+class build
+    :source "package.prlx"
+    :api_key "QBwf_ZLsH-1tjH0XwPwfoS0PUYQs0pi2RNPYeIHo";

@@ -1,0 +1,78 @@
+<h5>math:<strong>abs</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Results the absolute value of x. (integer/float)</p>
+<h5>math:<strong>acos</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Results the arc cosine of x (in radians).</p>
+<h5>math:<strong>add</strong><span style="font-style: italic"> x y</span><span style="font-size: 75%"></span></h5>
+<p>Results the value x + y.</p>
+<h5>math:<strong>asin</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Results the arc sine of x (in radians).</p>
+<h5>math:<strong>atan</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Results the arc tangent of y/1 (in radians).</p>
+<h5>math:<strong>ceil</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Results the smallest integral value larger than or equal to x.</p>
+<h5>math:<strong>cos</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Results the cosine of x (assumed to be in radians).</p>
+<h5>math:<strong>cosh</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Results the hyperbolic cosine of x.</p>
+<h5>math:<strong>deg</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Converts the angle x from radians to degrees.</p>
+<h5>math:<strong>div</strong><span style="font-style: italic"> x y</span><span style="font-size: 75%"></span></h5>
+<p>Results the value x / y.</p>
+<h5>math:<strong>eq</strong><span style="font-style: italic"> x y</span><span style="font-size: 75%"></span></h5>
+<p>Results the value x == y.</p>
+<h5>math:<strong>exp</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Results the value e^x (where e is the base of natural logarithms).</p>
+<h5>math:<strong>factorial</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Returns the factorial of x.</p>
+<h5>math:<strong>floor</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Results the largest integral value smaller than or equal to x.</p>
+<h5>math:<strong>frexp</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Returns the mantissa and the exponent, of x.</p>
+<h5>math:<strong>fmod</strong><span style="font-style: italic"> x y</span><span style="font-size: 75%"></span></h5>
+<p>Result the remainder of the division of x by y that rounds the quotient towards zero. (integer/float).</p>
+<h5>math:<strong>ge</strong><span style="font-style: italic"> x y</span><span style="font-size: 75%"></span></h5>
+<p>Results the value x >= y.</p>
+<h5>math:<strong>gt</strong><span style="font-style: italic"> x y</span><span style="font-size: 75%"></span></h5>
+<p>Results the value x > y.</p>
+<h5>math:<strong>le</strong><span style="font-style: italic"> x y</span><span style="font-size: 75%"></span></h5>
+<p>Results the value x <= y.</p>
+<h5>math:<strong>log</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Result the logarithm of x in the given base. The default for base is e (so that the function result the natural logarithm of x).</p>
+<h5>math:<strong>log10</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Returns the base-10 logarithm of x.</p>
+<h5>math:<strong>lt</strong><span style="font-style: italic"> x y</span><span style="font-size: 75%"></span></h5>
+<p>Results the value x < y.</p>
+<h5>math:<strong>mod</strong><span style="font-style: italic"> x y</span><span style="font-size: 75%"></span></h5>
+<p>Result the value x % y.</p>
+<h5>math:<strong>modf</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Result the integral part of x and the fractional part of x. Its second result is always a float.</p>
+<h5>math:<strong>mul</strong><span style="font-style: italic"> x y</span><span style="font-size: 75%"></span></h5>
+<p>Results the value x * y.</p>
+<h5>math:<strong>ne</strong><span style="font-style: italic"> x y</span><span style="font-size: 75%"></span></h5>
+<p>Results the value x != y.</p>
+<h5>math:<strong>neg</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Results the value -x.</p>
+<h5>math:<strong>not</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Results the value !x.</p>
+<h5>math:<strong>pow</strong><span style="font-style: italic"> x y</span><span style="font-size: 75%"></span></h5>
+<p>Results the value x^y.</p>
+<h5>math:<strong>rad</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Converts the angle x from degrees to radians.</p>
+<h5>math:<strong>random</strong><span style="font-style: italic"> x y</span><span style="font-size: 75%"></span></h5>
+<p>Result inclusive random integer of between x and y.</p>
+<h5>math:<strong>randomseed</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Sets x as the "seed" for the random number generator: equal seeds produce equal sequences of numbers.</p>
+<h5>math:<strong>round</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Results the rounded value of x.</p>
+<h5>math:<strong>sin</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Results the sine of x (assumed to be in radians).</p>
+<h5>math:<strong>sinh</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Results the hyperbolic sine of x.</p>
+<h5>math:<strong>sqrt</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Results the square root of x.</p>
+<h5>math:<strong>sub</strong><span style="font-style: italic"> x y</span><span style="font-size: 75%"></span></h5>
+<p>Results the value x - y.</p>
+<h5>math:<strong>tan</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Results the tangent of x (assumed to be in radians).</p>
+<h5>math:<strong>tanh</strong><span style="font-style: italic"> x</span><span style="font-size: 75%"></span></h5>
+<p>Results the hyperbolic tangent of x.</p>

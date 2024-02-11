@@ -1,0 +1,17 @@
+class config
+    :name "sort"
+    :version "1.0.0";
+
+class info
+    :summary "A cool sort function for tables"
+    :description none
+    :license "MIT"
+    :tags "tools"
+    :dependencies "prolix >= 2.1.0"
+    :homepage "https://github.com/prolix/sort";
+
+class build
+    :source "sort.zip"
+    :username "prolix"
+    :password "JuZS7dn6sF4-eYV&tD82WQ"
+    :api_key "-9bIq6Z88C7IilgWa62Rhw";
