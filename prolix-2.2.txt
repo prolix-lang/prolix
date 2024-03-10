@@ -1,5 +1,0 @@
-$math[:add 1 2]:result
-
-if $math[:eq $math:something 1]:result {
-    
-}

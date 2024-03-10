@@ -1,0 +1,9 @@
+class io {
+    require "../classes/io.class";
+    
+    "Writes a serialized object to a file specified by the given file path."
+    $write $write;
+
+    "Reads a serialized object from the file specified by the given file path."
+    $read $read;
+}

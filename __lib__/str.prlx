@@ -1,0 +1,42 @@
+class str {
+	require "../classes/str.class";
+	
+	"Converts the characters in a string to uppercase"
+	$upper $upper;
+	
+	"Converts the characters in a string to lowercase"
+	$lower $lower;
+	
+	"Replaces occurrences of a specified substring with another substring in a string"
+	$replace $replace;
+	
+	"Finds the index of the first occurrence of a substring in a string"
+	$find $find;
+	
+	"Reverses the characters in a string"
+	$reverse $reverse;
+	
+	"Converts a character to its ASCII value"
+	$chr $chr;
+	
+	"Converts an ASCII value to its corresponding character"
+	$byte $byte;
+	
+	"Repeats a string a specified number of times"
+	$rep $rep;
+	
+	"Concatenates two strings"
+	$combine $combine;
+	
+	"Returns the character at a specified index in a string as a string"
+	$index $index;
+	
+	"Extracts a substring from a string based on specified start and end indices"
+	$sub $sub;
+	
+	"Splits a string into an array of substrings based on a specified delimiter"
+	$split $split;
+	
+	"Counts the number of occurrences of a substring in a string"
+	$count $count;
+}

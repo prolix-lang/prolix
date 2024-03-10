@@ -1,0 +1,36 @@
+class table {
+	require "../classes/table.class";
+	
+	"Adds a new entry to the table if it's not locked"
+	$add $add;
+	
+	"Sets or removes an entry in the table based on the provided key and value, only if the table is not locked"
+	$set $set;
+	
+	"Returns the size of the table"
+	$size $size;
+	
+	"Swaps the values of two entries in the table if it's not locked"
+	$replace $replace;
+	
+	"Moves the value associated with key1 to key2 if it's not locked"
+	$move $move;
+	
+	"Removes an entry from the table based on the provided key if it's not locked"
+	$remove $remove;
+	
+	"Returns the value associated with the provided key in the table"
+	$get $get;
+	
+	"Removes and returns the value associated with the provided key in the table if it's not locked"
+	$take $take;
+	
+	"Finds and returns the key associated with a specified value in the table if it's not locked"
+	$find $find;
+	
+	"Clears all entries from the table if it's not locked"
+	$clear $clear;
+	
+	"Creates and returns a new HashMap<Object, Object>"
+	$create $create;
+}

@@ -1,0 +1,18 @@
+"
+$funcName {
+    # Body code
+} : $arg1 $arg2;
+"
+
+$greet {
+    $print : "Hello, " "";
+    $print : $name;
+} : $name;
+$greet : "John";
+
+# You can use the str built-in module instead printing 2 times
+require str;
+$greet {
+    $print : [str.concat : "Hello, " $name];
+} : $name;
+$greet : "John";

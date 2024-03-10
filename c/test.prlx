@@ -1,4 +1,0 @@
-class main :__index__ {
-    loop 10000 {$io:write "hi\n";}
-}
-main $main;

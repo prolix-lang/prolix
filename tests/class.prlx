@@ -1,0 +1,6 @@
+class myClass {
+    $a 5;
+    $b "Cool!";
+}
+
+$print : myClass.a; # Expected output: 5

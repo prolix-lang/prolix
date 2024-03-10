@@ -1,0 +1,135 @@
+class math {
+    require "../classes/math.class";
+
+    # Constants
+
+    "The mathematical constant e = 2.718281…, has built-in precision."
+    $e $e;
+
+    "The mathematical constant π = 3.141592…, to available precision."
+    $pi $pi;
+
+    # Comparison Functions
+
+    "Returns true if x is equal to y."
+    $eq $eq;
+    
+    "Returns true if x is not equal to y."
+    $ne $ne;
+    
+    "Returns true if x is greater than y."
+    $gt $gt;
+    
+    "Returns true if x is less than y."
+    $lt $lt;
+
+    "Returns true if x is greater than or equal to y."
+    $ge $ge;
+    
+    "Returns true if x is less than or equal to y."
+    $le $le;
+    
+    "Returns true if x is null, false, an empty string, or 0. Otherwise, returns false."
+    $not $not;
+    
+    "Logical AND operation. Returns true if both x and y are true."
+    
+    $and $and;
+
+    "Logical OR operation. Returns true if either x or y is true."
+    $or $or;
+    
+    "Logical XOR operation. Returns true if exactly one of x and y is true."
+    $xor $xor;
+
+    # Arithmetic Functions
+
+    "Adds x and y."
+    $add $add;
+    
+    "Subtracts y from x."
+    $sub $sub;
+    
+    "Multiplies x by y."
+    $mul $mul;
+    
+    "Divides x by y."
+    $div $div;
+    
+    "Computes the remainder of x divided by y."
+    $mod $mod;
+    
+    "Raises x to the power of y."
+    $pow $pow;
+
+    # Mathematical Functions
+
+    "Returns the absolute value of x."
+    $abs $abs;
+    
+    "Returns the arc cosine of x in radians."
+    $acos $acos;
+    
+    "Returns the arc sine of x in radians."
+    $asin $asin;
+    
+    "Returns the arc tangent of x in radians."
+    $atan $atan;
+    
+    "Returns the angle whose tangent is the quotient of x and y."
+    $atan2 $atan2;
+    
+    "Returns the smallest integer greater than or equal to x."
+    $ceil $ceil;
+
+    "Returns the cosine of x (assumed to be in radians)."
+    $cos $cos;
+    
+    "Returns the hyperbolic cosine of x."
+    $cosh $cosh;
+    
+    "Converts angle from radians to degrees."
+    $deg $deg;
+    
+    "Returns the value of 'e' raised to the power of x."
+    $exp $exp;
+    
+    "Returns the largest integer less than or equal to x."
+    $floor $floor;
+    
+    "Returns the natural logarithm (base 'e') of x."
+    $log $log;
+    
+    "Returns the base 10 logarithm of x."
+    $log10 $log10;
+    
+    "Computes the remainder of x divided by y."
+    $mod $mod;
+    
+    "Returns x raised to the power of y."
+    $pow $pow;
+    
+    "Converts angle from degrees to radians."
+    $rad $rad;
+    
+    "Generates a random floating-point number between 0.0 (inclusive) and 1.0 (exclusive)."
+    $random $random;
+    
+    "Rounds x to the nearest integer."
+    $round $round;
+    
+    "Returns the sine of x (assumed to be in radians)."
+    $sin $sin;
+    
+    "Returns the hyperbolic sine of x."
+    $sinh $sinh;
+    
+    "Returns the square root of x."
+    $sqrt $sqrt;
+    
+    "Returns the tangent of x (assumed to be in radians)."
+    $tan $tan;
+    
+    "Returns the hyperbolic tangent of x."
+    $tanh $tanh;
+}

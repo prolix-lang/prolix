@@ -1,0 +1,8 @@
+$a 5;
+$b 9;
+
+if [$lt : $a $b] {
+    $print : "$a is less than $b";
+} else {
+    $print : "$a is greater or equal to $b";
+}

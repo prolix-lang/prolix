@@ -1,0 +1,36 @@
+class os {
+	require "../classes/os.class";
+	
+	"Returns the operating system name"
+	$name $name;
+	
+	"Returns the maximum available memory"
+	$maxmem $maxmem;
+	
+	"Returns the total memory allocated to the JVM"
+	$totalmem $totalmem;
+	
+	"Returns the free memory available to the JVM"
+	$freemem $freemem;
+	
+	"Returns the operating system version"
+	$version $version;
+	
+	"Formats the current date according to the given format"
+	$date $date;
+	
+	"Executes a system command and returns the output"
+	$exec $exec;
+	
+	"Exits the program with the specified exit code (0 if null)"
+	$exit $exit;
+	
+	"Gets the value of the specified environment variable"
+	$getenv $getenv;
+	
+	"Deletes the file at the specified filepath"
+	$remove $remove;
+	
+	"Renames the file at the specified filepath to the new name"
+	$rename $rename;
+}

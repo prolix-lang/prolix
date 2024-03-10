@@ -1,0 +1,7 @@
+class myClass {
+    $method {
+        $print : "Hello, World!";
+    } : ;
+}
+
+myClass.method : ;
