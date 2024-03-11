@@ -1,5 +1,9 @@
-<h1>🌌 Prolix 2.2</h1>
-Prolix, an open-source and esoteric scripting language, is lightweight and easy to use in different programs.
+<p align="center">
+  <img src="/icon.png" alt="Prolix" style="height: 100px; width:100px;">
+</p>
+
+<h1 align="center">Prolix 2.2</h1>
+<p align="center">Prolix, an open-source and esoteric scripting language, is lightweight and easy to use in different programs.</p><br>
 
 <h2>📜 General Informations</h2>
 
