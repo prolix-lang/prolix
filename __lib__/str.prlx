@@ -17,10 +17,12 @@ class str {
 	$reverse $reverse;
 	
 	"Converts a character to its ASCII value"
-	$chr $chr;
+	$chr $_char;
+	$_char none;
 	
 	"Converts an ASCII value to its corresponding character"
-	$byte $byte;
+	$byte $_byte;
+	$_byte none;
 	
 	"Repeats a string a specified number of times"
 	$rep $rep;
