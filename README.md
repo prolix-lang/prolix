@@ -3,6 +3,13 @@
 </p>
 
 <h1 align="center">Prolix 2.2</h1>
+<p align="center">
+  <a href="#"><img src="https://img.shields.io/badge/lastest-2.2--b.2-blue" alt="Lastest"></a>
+  <a href="#"><img src="https://img.shields.io/badge/jre-7+-orange" alt="JRE"></a>
+  <a href="https://github.com/prolix-lang/prolix/issues"><img src="https://custom-icon-badges.demolab.com/github/issues-raw/prolix-lang/prolix?logo=issue" alt="Issues"></a>
+  <a href="https://github.com/prolix-lang/prolix/blob/main/LICENSE.txt"><img src="https://custom-icon-badges.demolab.com/github/license/prolix-lang/prolix?logo=law&logoColor=white" alt="License"></a>
+  <a href="https://discord.gg/XRZW7ZrkR7"><img src="https://discordapp.com/api/guilds/1185638738777362472/widget.png?style=shield" alt="Community"></a>
+</p>
 <p align="center">Prolix, an open-source and esoteric scripting language, is lightweight and easy to use in different programs.</p>
 
 <h2>📜 General Informations</h2>
