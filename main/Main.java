@@ -2488,6 +2488,8 @@ class Interpreter implements Serializable {
 class ProlixSystem implements Serializable {
 	static String HOME = System.getProperty("user.dir");
 	static long START_TIME = 0;
+
+	static String VERSION = "Prolix 2.2.0-b.3";
 }
 
 public class Main implements Serializable {
@@ -2669,13 +2671,16 @@ public class Main implements Serializable {
 
 				Main.run("str", args[1], GLOBAL);
 				return;
+			} else if (command.equals("version")) {
+				System.out.println(ProlixSystem.VERSION);
+				return;
 			} else {
 				System.out.println("no such command " + command);
 			}
 			return;
 		}
 
-		System.out.println("Prolix 2.2.0 (C) 2023-2024 @_morlus");
+		System.out.println("Prolix 2.2.0 (C) 2023-2024 _morlus");
 		while (true) {
 			@SuppressWarnings("resource")
 			Scanner scanner = new Scanner(System.in);

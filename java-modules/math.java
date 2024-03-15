@@ -10,9 +10,9 @@ public class math {
     public Object ne(Object obj1, Object obj2) {
         if (obj1 == null) {
             if (obj2 == null) {
-                return true;
+                return false;
             }
-            return obj2.equals(obj1);
+            return !obj2.equals(obj1);
         }
         return !obj1.equals(obj2);
     }

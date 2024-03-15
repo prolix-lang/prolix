@@ -16,11 +16,11 @@ class str {
 	"Reverses the characters in a string"
 	$reverse $reverse;
 	
-	"Converts a character to its ASCII value"
+	"Converts an ASCII value to its corresponding character"
 	$chr $_char;
 	$_char none;
 	
-	"Converts an ASCII value to its corresponding character"
+	"Converts a character to its ASCII value"
 	$byte $_byte;
 	$_byte none;
 	
