@@ -12,6 +12,8 @@
 </p>
 <p align="center">Prolix, an open-source and esoteric scripting language, is lightweight and easy to use in different programs.</p>
 
+![AMOST!!](https://github.com/prolix-lang/prolix/assets/159283428/8820f215-c244-403a-ae7e-663df35796c1)
+
 <h2>📜 General Informations</h2>
 
 - <strong>Website:</strong> <a href="https://prolix-lang.github.io">https://prolix-lang.github.io</a>
