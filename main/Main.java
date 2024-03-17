@@ -1139,9 +1139,21 @@ class Parser implements Serializable {
 		HashMap<Object, Object> res = new HashMap<Object, Object>();
 		this.advance();
 		while (!(this.tok.match(Token.RPAREN)) && !(this.tok.endofcode())) {
+			if (this.tok.match(Token.SEMICOLON)) {
+				this.advance();
+			}
 			Object key = this.getOneValue();
 			if (key instanceof Error) {
 				return key;
+			}
+
+			if (this.tok.match(Token.SEMICOLON)) {
+				res.put(Long.valueOf(res.size()), key);
+				this.advance();
+				continue;
+			} else if (this.tok.match(Token.RPAREN)) {
+				res.put(Long.valueOf(res.size()), key);
+				continue;
 			}
 
 			Object error = this.getValues();
@@ -1167,7 +1179,6 @@ class Parser implements Serializable {
 				value = new None();
 			}
 			res.put(key, value);
-			this.advance();
 		}
 
 		return res;
@@ -1952,12 +1963,14 @@ class Interpreter implements Serializable {
 		} else if (expr instanceof Long) {
 			amount = (Long) expr;
 		} else if (expr instanceof Double) {
-			amount = ((Double) expr).intValue();
+			amount = ((Double) expr).longValue();
+		} else if (expr instanceof Table) {
+			amount = ((Table) expr).values.size();
 		} else if (expr.equals(true)) {
 			amount = 1;
 		}
 
-		for (int count = 0; count < amount; count++) {
+		for (long count = 0; count < amount; count++) {
 			Object res = this.execGroup(codeBlock.copy(), true);
 			if (res instanceof Error) {
 				return res;
