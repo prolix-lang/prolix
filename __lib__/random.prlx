@@ -1,0 +1,73 @@
+require math table;
+
+class random {
+    $_seed [math.random : ];
+    $_cseed $_seed;
+
+    $seed {
+        random._seed $newseed;
+        random._cseed $newseed;
+    } : $newseed;
+    
+    $random {
+        random._cseed [$mul : [math.sin : [$add : random._cseed 1]] 10000];
+        random._cseed [$sub : random._cseed [math.floor : random._cseed]];
+        return random._cseed;
+    } : ;
+
+    $randrange {
+        $mType [$type : $m];
+        if [$ne : $mType "num"] {
+            return none;
+        }
+        $nType [$type : $n];
+        if [$ne : $nType "num"] {
+            return none;
+        }
+
+        $ceiledM [math.ceil : $m];
+        $flooredN [math.floor : $n];
+
+        return [
+            math.floor : [$add : 
+                [$mul : 
+                    [random.random : ]
+                    [$sub : $flooredN $ceiledM]
+                ] $ceiledM
+            ]
+        ];
+    } : $m $n;
+
+    $randint {
+        return [random.randrange : $m [$add : $n 1]];
+    } : $m $n;
+
+    $choice {
+        $objType [$type : $table];
+        if [$ne : $objType "table"] {
+            return none;
+        }
+        
+        $entries [table.entries : $table];
+        $chosenEntry [table.get : $entries [random.randrange : 0 [$len : $entries]]];
+        return [table.get : $chosenEntry 0];
+    } : $table;
+
+    $choiceval {
+        $objType [$type : $table];
+        if [$ne : $objType "table"] {
+            return none;
+        }
+        
+        $entries [table.entries : $table];
+        $chosenEntry [table.get : $entries [random.randrange : 0 [$len : $entries]]];
+        return [table.get : $chosenEntry 1];
+    } : $table;
+
+    $uniform {
+        return [$add :
+            $a
+            [$mul : [$sub : $b $a] [random.random : ]]
+        ]
+    } : $a $b;
+}

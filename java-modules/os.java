@@ -1,3 +1,8 @@
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class os {
 
 	public os() {
@@ -58,17 +63,19 @@ public class os {
 	}
 
 	public Object exit(Object code) {
-		long statusCode = 0;
-		if (code != null) {
-			if (code instanceof Long) {
-				statusCode = (Long) code;
-			} else {
-				return null;
-			}
-		}
-		System.exit((int) statusCode);
-		return null;
-	}
+        if (code == null) {
+            System.exit(0);
+        } else if (
+            code.equals(0)
+            || code.equals("")
+            || code.equals(false)
+        ) {
+            System.exit(0);
+        } else {
+            System.exit(1);
+        }
+        return null;
+    }
 
 	public Object getenv(Object varname) {
 		if (!(varname instanceof String)) {
@@ -81,7 +88,7 @@ public class os {
 		if (!(filepath instanceof String)) {
 			return null;
 		}
-		java.io.File file = new java.io.File((String) filepath);
+		File file = new File((String) filepath);
 		return file.delete();
 	}
 
@@ -89,8 +96,20 @@ public class os {
 		if (!(filepath instanceof String) || !(newname instanceof String)) {
 			return null;
 		}
-		java.io.File file = new java.io.File((String) filepath);
-		java.io.File newFile = new java.io.File((String) newname);
+		File file = new File((String) filepath);
+		File newFile = new File((String) newname);
 		return file.renameTo(newFile);
 	}
+
+	public Object chdir(Object dir) {
+        if (!(dir instanceof String)) {
+            return false;
+        }
+        Path path = Paths.get((String) dir);
+        if (!Files.exists(path)) {
+            return false;
+        }
+        System.setProperty("user.dir", path.toAbsolutePath().toString());
+        return true;
+    }
 }

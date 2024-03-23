@@ -1,5 +1,5 @@
 class os {
-	require "../classes/os.class";
+	require "classes/os.class";
 	
 	"Returns the operating system name"
 	$name $name;
@@ -22,7 +22,8 @@ class os {
 	"Executes a system command and returns the output"
 	$exec $exec;
 	
-	"Exits the program with the specified exit code (0 if null)"
+	"Exits the program with the specified exit code (0 if
+	null)"
 	$exit $exit;
 	
 	"Gets the value of the specified environment variable"
@@ -31,6 +32,10 @@ class os {
 	"Deletes the file at the specified filepath"
 	$remove $remove;
 	
-	"Renames the file at the specified filepath to the new name"
+	"Renames the file at the specified filepath to the new
+	name"
 	$rename $rename;
+	
+	"Changes the current working directory"
+	$chdir $chdir;
 }

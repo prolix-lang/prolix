@@ -1,12 +1,14 @@
 class math {
-    require "../classes/math.class";
+    require "classes/math.class";
 
     # Constants
 
-    "The mathematical constant e = 2.718281…, has built-in precision."
+    "The mathematical constant e = 2.718281…, has built-in
+    precision."
     $e $e;
 
-    "The mathematical constant π = 3.141592…, to available precision."
+    "The mathematical constant π = 3.141592…, to available
+    precision."
     $pi $pi;
 
     # Comparison Functions
@@ -29,17 +31,21 @@ class math {
     "Returns true if x is less than or equal to y."
     $le $le;
     
-    "Returns true if x is null, false, an empty string, or 0. Otherwise, returns false."
+    "Returns true if x is null, false, an empty string, or 0.
+    Otherwise, returns false."
     $not $not;
     
-    "Logical AND operation. Returns true if both x and y are true."
+    "Logical AND operation. Returns true if both x and y are
+    true."
     
     $and $and;
 
-    "Logical OR operation. Returns true if either x or y is true."
+    "Logical OR operation. Returns true if either x or y is
+    true."
     $or $or;
     
-    "Logical XOR operation. Returns true if exactly one of x and y is true."
+    "Logical XOR operation. Returns true if exactly one of x
+    and y is true."
     $xor $xor;
 
     # Arithmetic Functions
@@ -112,7 +118,8 @@ class math {
     "Converts angle from degrees to radians."
     $rad $rad;
     
-    "Generates a random floating-point number between 0.0 (inclusive) and 1.0 (exclusive)."
+    "Generates a random floating-point number between 0.0
+    (inclusive) and 1.0 (exclusive)."
     $random $random;
     
     "Rounds x to the nearest integer."

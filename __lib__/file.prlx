@@ -1,0 +1,71 @@
+'
+This class includes only static methods that operate on files,
+folder.
+
+In most cases, the methods defined here will delegate
+file system provider to perform file operations.
+'
+
+class file {
+    require "classes/file.class";
+    
+    "Copies a file or directory to a target location with
+    specified options"
+    $copy $copy;
+
+    "Creates a new directory at the specified path"
+    $createdir $createdir;
+
+    "Creates a new file at the specified path"
+    $createfile $createfile;
+
+    "Deletes the file or directory at the specified path"
+    $delete $delete;
+
+    "Checks whether a file or directory exists at the 
+    specified path"
+    $exists $exists;
+
+    "Retrieves the last modified time of the file or
+    directory at the specified path"
+    $getlastmodtime $getlastmodtime;
+
+    "Retrieves the owner of the file or directory at the
+    specified path"
+    $getowner $getowner;
+
+    "Checks whether the specified path points to a
+    directory"
+    $isdir $isdir;
+
+    "Checks whether the specified file is executable"
+    $isexe $isexe;
+
+    "Checks whether the specified file or directory is
+    hidden"
+    $ishidden $ishidden;
+
+    "Checks whether the specified file or directory is
+    readable"
+    $isreadable $isreadable;
+
+    "Checks whether the specified path points to a regular
+    file"
+    $isregular $isregular;
+
+    "Checks whether the specified file or directory is
+    writable"
+    $iswritable $iswritable;
+
+    "Lists all entries (files and directories) within the
+    specified directory"
+    $list $list;
+
+    "Moves a file or directory to a target location with
+    specified options"
+    $move $move;
+
+    "Sets the last modified time of the file or directory
+    at the specified path"
+    $setlastmodtime $setlastmodtime;
+}

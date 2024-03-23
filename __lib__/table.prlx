@@ -1,36 +1,72 @@
 class table {
-	require "../classes/table.class";
-	
-	"Adds a new entry to the table if it's not locked"
-	$add $add;
-	
-	"Sets or removes an entry in the table based on the provided key and value, only if the table is not locked"
-	$set $set;
-	
-	"Returns the size of the table"
-	$size $size;
-	
-	"Swaps the values of two entries in the table if it's not locked"
-	$replace $replace;
-	
-	"Moves the value associated with key1 to key2 if it's not locked"
-	$move $move;
-	
-	"Removes an entry from the table based on the provided key if it's not locked"
-	$remove $remove;
-	
-	"Returns the value associated with the provided key in the table"
-	$get $get;
-	
-	"Removes and returns the value associated with the provided key in the table if it's not locked"
-	$take $take;
-	
-	"Finds and returns the key associated with a specified value in the table if it's not locked"
-	$find $find;
-	
-	"Clears all entries from the table if it's not locked"
-	$clear $clear;
-	
-	"Creates and returns a new HashMap<Object, Object>"
-	$create $create;
+    require "classes/table.class";
+
+    "Adds a new entry to the table"
+    $add $add;
+
+    "Sets or removes an entry in the table based on the
+    provided key and value"
+    $set $set;
+
+    "Returns the size of the table"
+    $size $size;
+
+    "Swaps the values of two entries in the table"
+    $replace $replace;
+
+    "Moves the value associated with key1 to key2"
+    $move $move;
+
+    "Removes an entry from the table based on the provided
+    key"
+    $remove $remove;
+
+    "Returns the value associated with the provided key
+    in the table"
+    $get $get;
+
+    "Removes and returns the value associated with the
+    provided key in the table"
+    $take $take;
+
+    "Finds and returns the key associated with a specified
+    value in the table"
+    $find $find;
+
+    "Clears all entries from the table"
+    $clear $clear;
+
+    "Creates and returns a new table"
+    $create $create;
+
+    "Compares two tables and returns true if they are the
+    same"
+    $compare $compare;
+
+    "Create a shallow copy of the provided table"
+    $clone $clone;
+
+    "
+    @desc
+    Returns a table with all the entries from the provided
+    table
+
+    @example
+        require table;
+
+        $table ('x' 20; 'y' 50; 'z' 10; 't' 80);
+        $entries [table.entries : $table];
+
+        $idx 0;
+        loop [$len : $entries] {
+        $entry [table.get : $entries $idx];
+        $entryKey [table.get : $entry 0];
+        $entryValue [table.get : $entry 1];
+
+        # Do something with $entryKey and $entryValue
+
+        $idx [$add : $idx 1];
+        }
+    "
+    $entries $entries;
 }

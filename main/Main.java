@@ -335,7 +335,7 @@ class Lexer implements Serializable {
 		boolean inSkip = false;
 		this.advance();
 
-		while (this.current_char != '\0' && this.current_char != delimiter && this.current_char != '\n') {
+		while (this.current_char != '\0' && this.current_char != delimiter || inSkip) {
 			if (inSkip) {
 				inSkip = false;
 				String _char;
@@ -347,8 +347,66 @@ class Lexer implements Serializable {
 					_char = "\b";
 				} else if (this.current_char == 'r') {
 					_char = "\r";
+				} else if (this.current_char == 'f') {
+					_char = "\f";
+				}  else if (this.current_char == 'a') {
+					_char = String.valueOf((char) 0x7);
+				}  else if (this.current_char == 'e') {
+					_char = String.valueOf((char) 0x1B);
+				} else if (this.current_char == 'x') {
+					Position pos = this.pos.copy();
+					String str = "";
+					for (int idx = 0;idx < 2;idx++) {
+						this.advance();
+						if (this.current_char == delimiter || this.current_char == '\0') {
+							return new Error(
+								pos,
+								"\\xXX escape is truncated"
+							);
+						}
+						str += String.valueOf(this.current_char);
+					}
+					int hex;
+					try {
+						hex = Integer.parseInt(str, 16);
+					} catch (NumberFormatException e) {
+						return new Error(
+							pos,
+							"\\xXX escape is malformed"
+						);
+					}
+					_char = String.valueOf((char) hex);
+				} else if (this.current_char == 'u') {
+					Position pos = this.pos.copy();
+					String str = "";
+					for (int idx = 0;idx < 4;idx++) {
+						this.advance();
+						if (this.current_char == delimiter || this.current_char == '\0') {
+							return new Error(
+								pos,
+								"\\uXXXX escape is truncated"
+							);
+						}
+						str += String.valueOf(this.current_char);
+					}
+					int hex;
+					try {
+						hex = Integer.parseInt(str, 16);
+					} catch (NumberFormatException e) {
+						return new Error(
+							pos,
+							"\\uXXXX escape is malformed"
+						);
+					}
+					_char = String.valueOf((char) hex);
+				} else if (this.current_char == '"') {
+					_char = "\"";
+				} else if (this.current_char == '\'') {
+					_char = "'";
+				} else if (this.current_char == '\\') {
+					_char = "\\";
 				} else {
-					_char = String.valueOf(this.current_char);
+					_char = "\\" + String.valueOf(this.current_char);
 				}
 				res += _char;
 				this.advance();
@@ -558,6 +616,25 @@ class Table implements Serializable {
 	}
 
 	@SuppressWarnings("unchecked")
+	public HashMap<Object, Object> toHashMap() {
+		HashMap<Object, Object> res = new HashMap<Object, Object>();
+		for (HashMap.Entry<Object, Object> entry : this.values.entrySet()) {
+			Object key = entry.getKey();
+			Object value = entry.getValue();
+
+			if (key instanceof HashMap) {
+				key = new Table((HashMap<Object, Object>) key).toHashMap();
+			}
+			if (value instanceof HashMap) {
+				value = new Table((HashMap<Object, Object>) value).toHashMap();
+			}
+			
+			res.put(key, value);
+		}
+		return res;
+	}
+
+	@SuppressWarnings("unchecked")
 	public Table deepCopy() {
         HashMap<Object, Object> deepCopyValues = new HashMap<>();
         HashMap<Object, Object> deepCopyClasses = new HashMap<>();
@@ -610,10 +687,12 @@ class PrlxClass implements Serializable {
 	Table attrs = new Table();
 	ArrayList<Token> obj_attrs = new ArrayList<Token>();
 	Interpreter _inter;
+	Boolean _self;
 
 	public PrlxClass(Token name, Group body) {
 		this.className = name;
 		this.classBody = body;
+		this._self = false;
 	}
 
 	public Object loadAttrs(Table global) {
@@ -1261,6 +1340,10 @@ class Function implements Serializable {
 	}
 }
 
+interface SysCall {
+	void invoke();
+}
+
 class SystemFunction implements Serializable {
 	public static HashMap<String, Method> imported_methods = new HashMap<String, Method>();
 	public static HashMap<String, Object> imported_instances = new HashMap<String, Object>();
@@ -1320,9 +1403,13 @@ class SystemFunction implements Serializable {
 			if (instance != this) {
 				for (int idx = 0; idx < final_args.length; idx++) {
 					if (final_args[idx] instanceof Table) {
-						final_args[idx] = ((Table) final_args[idx]).values;
+						final_args[idx] = ((Table) final_args[idx]).toHashMap();
 					} else if (final_args[idx] instanceof None) {
 						final_args[idx] = null;
+					} else if (final_args[idx] instanceof Group) {
+						final int i = idx;
+						SysCall sysCall = () -> SystemFunction._inter.execGroup((Group) final_args[i]);
+						final_args[idx] = sysCall;
 					}
 				}
 			}
@@ -1368,6 +1455,7 @@ class SystemFunction implements Serializable {
 				SystemFunction method = (SystemFunction) repr;
 				Object params[] = {prlxObj.mainClass};
 				Object res = method.call(params);
+				res = SystemFunction._inter.refresh(res);
 				SystemFunction.prolix_print(res, "");
 			} else {
 				System.out.print(String.format(
@@ -1434,11 +1522,23 @@ class SystemFunction implements Serializable {
 	}
 
 	public static Object prolix_eq(Object obj1, Object obj2) {
+		if (obj1 instanceof None) {
+			obj1 = null;
+		}
+		if (obj2 instanceof None) {
+			obj2 = null;
+		}
+		if (obj1 == null) {
+			if (obj2 == null) {
+				return true;
+			}
+			return obj2.equals(obj1);
+		}
         return obj1.equals(obj2);
     }
 
     public static Object prolix_ne(Object obj1, Object obj2) {
-        return !obj1.equals(obj2);
+        return !(Boolean) SystemFunction.prolix_eq(obj1, obj2);
     }
 
     public static Object prolix_gt(Object obj1, Object obj2) {
@@ -1499,10 +1599,12 @@ class SystemFunction implements Serializable {
     }
 
     public static Object prolix_not(Object obj) {
-        return (obj.equals(null)
-            || obj.equals(false)
+		if (obj == null) {
+			return true;
+		}
+        return obj.equals(false)
             || obj.equals("")
-            || obj.equals(0));
+            || obj.equals(0);
     }
     
     public static Object prolix_and(Object obj1, Object obj2) {
@@ -1571,13 +1673,13 @@ class SystemFunction implements Serializable {
     public static Object prolix_div(Object obj1, Object obj2) {
         if (obj1 instanceof Long) {
             if (obj2 instanceof Long) {
-                return Double.valueOf((Long) obj1) / Double.valueOf((Long) obj2);
+                return ((Long) obj1).doubleValue() / ((Long) obj2).doubleValue();
             } else if (obj2 instanceof Double) {
                 return ((Long) obj1) / (Double) obj2;
             }
         } else if (obj1 instanceof Double) {
             if (obj2 instanceof Long) {
-                return (Double) obj1 / Double.valueOf((Long) obj2);
+                return (Double) obj1 / ((Long) obj2).doubleValue();
             } else if (obj2 instanceof Double) {
                 return (Double) obj1 / (Double) obj2;
             }
@@ -1620,8 +1722,6 @@ class SystemFunction implements Serializable {
 			return ((PrlxObject) obj).mainClass.attrs.get("__name__");
 		} else if (obj instanceof byte[]) {
 			return "bytes";
-		} else if (obj instanceof java.awt.Font) {
-			return "font";
 		} else {
 			return "unknown";
 		}
@@ -1667,6 +1767,23 @@ class SystemFunction implements Serializable {
 	public static Object prolix_tick() {
 		return (System.nanoTime() - ProlixSystem.START_TIME) / 1000000000d;
 	}
+
+	public static Object prolix_test(Object obj) {
+		if (!(obj instanceof Group)) {
+			return new Error(SystemFunction.pos_call, "$test required group type (got " + SystemFunction._inter.getType(obj) + ")");
+		}
+		Group group = (Group) obj;
+		Object ret = SystemFunction._inter.execGroup(group);
+		HashMap<Object, Object> res = new HashMap<Object, Object>();
+		if (ret instanceof Error) {
+			res.put(0, false);
+			res.put(1, ((Error) ret).msg);
+		} else {
+			res.put(0, true);
+			res.put(1, ret);
+		}
+		return res;
+	}
 }
 
 class PrlxObject implements Serializable {
@@ -1681,6 +1798,7 @@ class PrlxObject implements Serializable {
 	public Object _new(Token tok, Interpreter _inter, ArrayList<Object> params) {
 		Object func = this.mainClass.attrs.get("__init__");
 		ArrayList<Object> fin_params = new ArrayList<Object>();
+		this.mainClass.attrs.clearEdits();
 		fin_params.add(this.mainClass);
 		for (Object param : params) {
 			fin_params.add(param);
@@ -1854,7 +1972,8 @@ class Interpreter implements Serializable {
 		if (arg instanceof Error) {
 			return arg;
 		}
-		if (arg instanceof Double dou) {
+		if (arg instanceof Double) {
+			Double dou = (Double) arg;
 			if (Math.floor(dou) == dou) {
 				arg = dou.longValue();
 			}
@@ -2139,6 +2258,8 @@ class Interpreter implements Serializable {
 				String.format("undefined class named '%s'", class_tok.value)
 			); 
 		}
+
+		((PrlxClass) _class)._self = true;
 		
 		PrlxObject prlxObject = new PrlxObject((PrlxClass) _class, (String) var_tok.value);
 		prlxObject.mainClass.attrs.set("__name__", prlxObject.mainClass.className.value);
@@ -2243,11 +2364,7 @@ class Interpreter implements Serializable {
 				}
 				return new None();
 			}
-			String original_path = ProlixSystem.HOME;
-			ProlixSystem.HOME = Paths.get(file.getAbsolutePath()).getParent().toString();
-			System.setProperty("user.dir", ProlixSystem.HOME);
 			Main.run(path, string, this.global);
-			ProlixSystem.HOME = original_path;
 		}
 		return new None();
 	}
@@ -2295,11 +2412,13 @@ class Interpreter implements Serializable {
 			return "obj";
 		} else if (obj instanceof None) {
 			return "none";
+		} else if (obj instanceof byte[]) {
+			return "bytes";
 		}
 		return "none";
 	}
 
-	private Object execGroup(Group group) {
+	public Object execGroup(Group group) {
 		Interpreter interpreter = new Interpreter(group.tokens);
 		interpreter.traceback = this.traceback;
 		interpreter.global = this.global;
@@ -2307,7 +2426,7 @@ class Interpreter implements Serializable {
 		return res;
 	}
 
-	private Object execGroup(Group group, boolean inLoop) {
+	public Object execGroup(Group group, boolean inLoop) {
 		Interpreter interpreter = new Interpreter(group.tokens);
 		interpreter.global = this.global;
 		interpreter.traceback = this.traceback;
@@ -2363,6 +2482,8 @@ class Interpreter implements Serializable {
 			return this.refreshTable(new Table((HashMap<Object, Object>) value));
 		} else if (value instanceof ArrayList) {
 			return this.refreshTable(new Table((ArrayList<Object>) value));
+		} else if (value == null) {
+			return new None();
 		}
 		return value;
 	}
@@ -2376,13 +2497,18 @@ class Interpreter implements Serializable {
 			if (res instanceof Error) {
 				return res;
 			}
+			ArrayList<Object> params_ = new ArrayList<Object>();
 			Object parent = this.loadParentAttr(res, tok.obj_attrs);
 			if (parent instanceof Error) {
 				return parent;
-			}
-			if (parent instanceof PrlxObject) {
-				ArrayList<Object> params_ = new ArrayList<Object>();
+			} else if (parent instanceof PrlxObject) {
 				params_.add(((PrlxObject) parent).mainClass);
+			} else if (parent instanceof PrlxClass) {
+				if (((PrlxClass) parent)._self) {
+					params_.add(parent);
+				}
+			}
+			if (params_.size() > 0) {
 				for (Object obj : params) {
 					params_.add(obj);
 				}
@@ -2406,8 +2532,9 @@ class Interpreter implements Serializable {
 			SystemFunction method = (SystemFunction) func;
 			SystemFunction.pos_call = tok.pos;
 			SystemFunction._inter = this;
-			Object r = method.call(params.toArray());
-			return r;
+			Object res = method.call(params.toArray());
+			res = this.refresh(res);
+			return res;
 		}
 		if (type == "func") {
 			Function function = (Function) func;
@@ -2433,9 +2560,15 @@ class Interpreter implements Serializable {
 		if (parent instanceof Error) {
 			return parent;
 		}
+		ArrayList<Object> params_ = new ArrayList<Object>();
 		if (parent instanceof PrlxObject) {
-			ArrayList<Object> params_ = new ArrayList<Object>();
 			params_.add(((PrlxObject) parent).mainClass);
+		} else if (parent instanceof PrlxClass) {
+			if (((PrlxClass) parent)._self) {
+				params_.add(parent);
+			}
+		}
+		if (params_.size() > 0) {
 			for (Object obj : params) {
 				params_.add(obj);
 			}
@@ -2452,7 +2585,9 @@ class Interpreter implements Serializable {
 			SystemFunction method = (SystemFunction) func;
 			SystemFunction.pos_call = tok.pos;
 			SystemFunction._inter = this;
-			return method.call(params.toArray());
+			Object _res = method.call(params.toArray());
+			_res = SystemFunction._inter.refresh(res);
+			return _res;
 		}
 		if (type == "func") {
 			Function function = (Function) func;
@@ -2500,6 +2635,7 @@ class Interpreter implements Serializable {
 
 class ProlixSystem implements Serializable {
 	static String HOME = System.getProperty("user.dir");
+	static String MAIN = null;
 	static long START_TIME = 0;
 
 	static String VERSION = "Prolix 2.2.0-b.3";
@@ -2561,6 +2697,7 @@ public class Main implements Serializable {
 		GLOBAL.set("tostr", new SystemFunction("tostr"));
 		GLOBAL.set("tonum", new SystemFunction("tonum"));
 		GLOBAL.set("exec", new SystemFunction("exec"));
+		GLOBAL.set("test", new SystemFunction("test"));
 		GLOBAL.set("error", new SystemFunction("error"));
 		
 		GLOBAL.set("global", GLOBAL);
@@ -2572,6 +2709,10 @@ public class Main implements Serializable {
 				if (args.length < 2) {
 					System.out.println("missing arguments");
 					return;
+				}
+				System.setProperty("prolix.argsize", String.valueOf(args.length - 2));
+				for (int i = 2;i < args.length;i++) {
+					System.setProperty("prolix.arg" + i, args[i]);
 				}
 				File file = new File(args[1]);
 				FileInputStream inputStream;
@@ -2605,6 +2746,7 @@ public class Main implements Serializable {
 				text = new String(bytes);
 				System.setProperty("user.dir", Paths.get(file.getAbsolutePath()).getParent().toString());
 				ProlixSystem.START_TIME = System.nanoTime();
+				ProlixSystem.MAIN = file.getAbsolutePath();
 				run(
 					new File(
 						System.getProperty("user.dir")
@@ -2617,6 +2759,10 @@ public class Main implements Serializable {
 				if (args.length < 2) {
 					System.out.println("missing arguments");
 					return;
+				}
+				System.setProperty("prolix.argsize", String.valueOf(args.length - 2));
+				for (int i = 2;i < args.length;i++) {
+					System.setProperty("prolix.arg" + i, args[i]);
 				}
 				File file = new File(args[1]);
 				Scanner reader;
@@ -2678,8 +2824,12 @@ public class Main implements Serializable {
 				System.out.println("compile took " + (System.currentTimeMillis() - start) / 1000d + "s");
 			} else if (command.equals("execute")) {
 				if (args.length < 2) {
-					System.out.println("Missing arguments");
+					System.out.println("missing arguments");
 					return;
+				}
+				System.setProperty("prolix.argsize", String.valueOf(args.length - 2));
+				for (int i = 2;i < args.length;i++) {
+					System.setProperty("prolix.arg" + i, args[i]);
 				}
 
 				Main.run("str", args[1], GLOBAL);

@@ -1,0 +1,53 @@
+class path {
+    require "classes/path.class";
+
+    "Returns the filename of the provided path as a
+    string."
+    $getfilename $getfilename;
+
+    "Returns the filesystem associated with the
+    provided path as a string."
+    $getfilesys $getfilesys;
+
+    "Returns the parent of the provided path as a
+    string."
+    $getparent $getparent;
+
+    "Returns a boolean indicating whether the provided
+    path is absolute."
+    $isabs $isabs;
+
+    "Returns the normalized form of the provided path
+    as a string."
+    $normalize $normalize;
+
+    "Returns a relative path from the provided path to
+    the other path."
+    $relativize $relativize;
+
+    "Resolves the other path against the provided path."
+    $resolve $resolve;
+
+    "Resolves the other path's parent against the
+    provided path."
+    $resolvesib $resolvesib;
+
+    "Returns a boolean indicating whether the provided
+    path starts with the other path."
+    $startswith $startswith;
+
+    "Returns the absolute form of the provided path."
+    $toabs $toabs;
+
+    "Returns a boolean indicating whether the provided
+    path exists in the filesystem."
+    $exists $exists;
+
+    "Returns a boolean indicating whether the provided
+    path corresponds to a file."
+    $isfile $isfile;
+
+    "Returns a boolean indicating whether the provided
+    path corresponds to a directory."
+    $isdir $isdir;
+}

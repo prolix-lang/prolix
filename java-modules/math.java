@@ -75,10 +75,12 @@ public class math {
     }
 
     public Object not(Object obj) {
-        return (obj.equals(null)
-            || obj.equals(false)
+        if (obj == null) {
+            return true;
+        }
+        return obj.equals(false)
             || obj.equals("")
-            || obj.equals(0));
+            || obj.equals(0);
     }
     
     public Object and(Object obj1, Object obj2) {
@@ -148,13 +150,13 @@ public class math {
     public Object div(Object obj1, Object obj2) {
         if (obj1 instanceof Long) {
             if (obj2 instanceof Long) {
-                return Double.valueOf((Long) obj1) / Double.valueOf((Long) obj2);
+                return ((Long) obj1).doubleValue() / ((Long) obj2).doubleValue();
             } else if (obj2 instanceof Double) {
                 return ((Long) obj1) / (Double) obj2;
             }
         } else if (obj1 instanceof Double) {
             if (obj2 instanceof Long) {
-                return (Double) obj1 / Double.valueOf((Long) obj2);
+                return (Double) obj1 / ((Long) obj2).doubleValue();
             } else if (obj2 instanceof Double) {
                 return (Double) obj1 / (Double) obj2;
             }
@@ -308,7 +310,7 @@ public class math {
     public Object pow(Object obj1, Object obj2) {
         if (obj1 instanceof Long) {
             if (obj2 instanceof Long) {
-                return Math.pow((Double) obj1, (Double) obj2);
+                return Math.pow((Long) obj1, (Long) obj2);
             } else if (obj2 instanceof Double) {
                 return Math.pow((Double) obj1, (Double) obj2);
             }
