@@ -58,6 +58,24 @@
 - [x] Commands (`run`, `compile`, `execute`, etc.)
 - [x] Table constructor
 - [ ] Writing built-in modules
+  - Data Types
+      - `table` — Prolix table manipulations
+  - Text Processing Services
+      - `str` — String processing manipulations
+      - `regex` — Regular expression operations
+  - Numeric and Mathematical Modules
+    - `math` — Mathematical functions
+    - `random` — Generate pseudo-random numbers
+  - File and Directory Access
+      - `file` — Common file operations
+      - `path` — Path name manipulations
+  - Data Persistence
+      - `bytes` — Prolix object serialization
+  - Generic Operating System Services
+      - `os` — Operating system facilities
+      - `io` — Input/Output operations
+  - Internet Data Handling
+      - `json` — JSON encoder and decoder
 - [ ] Releasing final version
 
 <h2>ℹ️ Copyright and License Information</h2>
