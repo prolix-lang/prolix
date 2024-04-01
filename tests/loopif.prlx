@@ -1,7 +1,0 @@
-# The if loop statement in Prolix is ​​essentially a while loop statement
-
-$i 10;
-loop if [$gt : $i 0] {
-    $print : $i;
-    $i [$sub : $i 1];
-}

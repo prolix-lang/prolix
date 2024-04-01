@@ -1,3 +1,0 @@
-require mymodule;
-
-$myfunc : ; # A function has been imported from mymodule

@@ -1,8 +1,0 @@
-$int 123;
-$str "Hi";
-$array 1 "x" 5;
-$table (
-    "x" 20;
-    12.5 "test";
-);
-$bool true;
